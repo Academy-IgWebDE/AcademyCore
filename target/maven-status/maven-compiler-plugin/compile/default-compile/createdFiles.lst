@@ -1,0 +1,4 @@
+net\academy\common\player\command\enums\CommandType.class
+net\academy\common\player\command\CommandInfo.class
+net\academy\common\player\command\AcademyCommand$1.class
+net\academy\common\player\command\AcademyCommand.class
