@@ -27,16 +27,13 @@ public class ScoreboardHelper {
         Scoreboard scoreboard = scoreboardManager.getNewScoreboard();
 
         Objective sidebar = scoreboard.registerNewObjective("sidebar" + player.getUniqueId(), "dummy", title);
-
         sidebar.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         Objective tabList = scoreboard.registerNewObjective("tabList" + player.getUniqueId(), "dummy", title);
-
-        sidebar.setDisplaySlot(DisplaySlot.PLAYER_LIST);
+        tabList.setDisplaySlot(DisplaySlot.PLAYER_LIST);
 
         Objective belowName = scoreboard.registerNewObjective("belowName" + player.getUniqueId(), "dummy", title);
-
-        sidebar.setDisplaySlot(DisplaySlot.BELOW_NAME);
+        belowName.setDisplaySlot(DisplaySlot.BELOW_NAME);
 
         int slot = lines.length - 1;
 
