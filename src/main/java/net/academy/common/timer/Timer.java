@@ -5,6 +5,7 @@ import net.academy.common.player.command.AcademyCommand;
 import net.academy.common.timer.interfaces.ReverseTimerEndEvent;
 import net.academy.common.timer.interfaces.StartTimerEvent;
 import net.academy.common.timer.interfaces.StopTimerEvent;
+import net.academy.common.timer.interfaces.TimerTickEvent;
 import net.academy.common.utils.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -19,6 +20,7 @@ public class Timer {
     private StartTimerEvent startTimerEvent;
     private StopTimerEvent stopTimerEvent;
     private ReverseTimerEndEvent reverseTimerEndEvent;
+    private TimerTickEvent timerTickEvent;
     private boolean reverse;
     private boolean running;
     private int time;
@@ -56,6 +58,11 @@ public class Timer {
         return this;
     }
 
+    public Timer setTimerTickEvent(TimerTickEvent event) {
+        timerTickEvent = event;
+        return this;
+    }
+
     public boolean isReverse() {
         return reverse;
     }
@@ -88,6 +95,12 @@ public class Timer {
     private void executeReviseTimerEndEvent() {
         if(reverseTimerEndEvent != null) {
             reverseTimerEndEvent.handle();
+        }
+    }
+
+    private void executeTimerTickEvent() {
+        if(timerTickEvent != null) {
+            timerTickEvent.handle();
         }
     }
 
@@ -133,7 +146,6 @@ public class Timer {
         }
     }
 
-
     private void run() {
         new BukkitRunnable() {
             @Override
@@ -152,6 +164,8 @@ public class Timer {
                     setRunning(false);
                     executeReviseTimerEndEvent();
                 }
+
+                executeTimerTickEvent();
             }
         }.runTaskTimer(Data.getPlugin(), 20, 20);
     }
