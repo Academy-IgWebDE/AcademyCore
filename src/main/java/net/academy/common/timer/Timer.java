@@ -100,7 +100,7 @@ public class Timer {
 
     private void executeTimerTickEvent() {
         if(timerTickEvent != null) {
-            timerTickEvent.handle();
+            timerTickEvent.handle(this);
         }
     }
 
