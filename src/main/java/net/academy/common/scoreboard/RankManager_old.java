@@ -1,11 +1,12 @@
 package net.academy.common.scoreboard;
 
-import dev.jcsoftware.jscoreboards.JGlobalMethodBasedScoreboard;
+import dev.jcsoftware.jscoreboards.JPerPlayerScoreboard;
 import dev.jcsoftware.jscoreboards.JScoreboardTeam;
 import net.academy.common.anotiation.comentState.ComentState;
 import net.academy.common.anotiation.comentState.State;
 import net.academy.common.cache.DataManager;
 import net.academy.common.scoreboard.common.Rank;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -16,13 +17,13 @@ import java.util.HashMap;
  * @version 1.0
  */
 @ComentState(commentState = State.FINISHED)
-public class RankManager {
+public class RankManager_old {
 
     private final DataManager dataManager;
+    private final DataManager scoreboars;
     private final HashMap<String, Rank> ranks;
     private String displaynamePettern;
 
-    private final JGlobalMethodBasedScoreboard scoreboard;
 
     private Rank defaultRank;
 
@@ -31,11 +32,11 @@ public class RankManager {
      *
      * @param displaynamePettern set the pettern to change the displayname from a player
      */
-    public RankManager(String displaynamePettern) {
+    public RankManager_old(String displaynamePettern) {
         this.dataManager = new DataManager("rankedPlayers");
+        this.scoreboars = new DataManager("scoreBoards");
         ranks = new HashMap<>();
         this.displaynamePettern = displaynamePettern;
-        scoreboard = new JGlobalMethodBasedScoreboard();
     }
 
 
@@ -50,8 +51,7 @@ public class RankManager {
      */
     public void createRank(Integer weight, String name, String displayname, String tabListPrefix, ChatColor chatColor) {
         if (ranks.containsKey(name)) return;
-        JScoreboardTeam jScoreboardTeam = scoreboard.createTeam(weight + name, tabListPrefix, chatColor);
-        ranks.put(name, new Rank(name, displayname, tabListPrefix, weight, chatColor, jScoreboardTeam));
+        ranks.put(name, new Rank(name, displayname, tabListPrefix, weight, chatColor));
     }
 
     /**
@@ -63,9 +63,18 @@ public class RankManager {
     public void setRankToPlayer(String name, Player player) {
         if (dataManager.contains(player.getUniqueId().toString())) dataManager.remove(player.getUniqueId().toString());
         dataManager.put(player.getUniqueId().toString(), name);
-        ranks.get(name).getTeam().addPlayer(player);
-        if (displaynamePettern != null)
-            player.setDisplayName(ChatColor.translateAlternateColorCodes('&', displaynamePettern.replaceAll("%rank%", ranks.get(name).getTeam().getDisplayName()).replaceAll("%playerName%", player.getName())));
+        Rank rank = ranks.get(name);
+
+        for (Player all : Bukkit.getOnlinePlayers()) {
+
+            JPerPlayerScoreboard scoreboard = (JPerPlayerScoreboard) scoreboars.get(player.getUniqueId().toString());
+            JScoreboardTeam team = scoreboard.createTeam(rank.getWeight() + rank.getDisplayName(), rank.getTabListPrefix() + rank.getColor());
+
+
+        }
+
+        //if (displaynamePettern != null)
+            //player.setDisplayName(ChatColor.translateAlternateColorCodes('&', displaynamePettern.replaceAll("%rank%", ranks.get(name).getTeam().getDisplayName()).replaceAll("%playerName%", player.getName())));
     }
 
     /**
@@ -75,7 +84,7 @@ public class RankManager {
      */
     public void removeRankFromPlayer(Player player) {
         if (!dataManager.contains(player.getUniqueId().toString())) return;
-        ranks.get(dataManager.get(player.getUniqueId().toString())).getTeam().removePlayer(player);
+       // ranks.get(dataManager.get(player.getUniqueId().toString())).getTeam().removePlayer(player);
         dataManager.remove(player.getUniqueId().toString());
         player.setDisplayName(player.getName());
     }
@@ -87,7 +96,7 @@ public class RankManager {
      */
     public void deleteRank(String name) {
         if (!ranks.containsKey(name)) return;
-        scoreboard.removeTeam(ranks.get(name).getTeam());
+        //scoreboard.removeTeam(ranks.get(name).getTeam());
         ranks.remove(name);
     }
 

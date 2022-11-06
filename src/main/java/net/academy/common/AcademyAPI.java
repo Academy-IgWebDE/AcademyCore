@@ -1,18 +1,15 @@
 package net.academy.common;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.academy.common.anotiation.comentState.ComentState;
 import net.academy.common.anotiation.comentState.State;
 import net.academy.common.cache.DataManager;
 import net.academy.common.console.ConsoleManager;
 import net.academy.common.player.PlayerManager;
 import net.academy.common.registerManager.AcademyAutoRegister;
-import net.academy.common.scoreboard.RankManager;
-import net.academy.common.scoreboard.ScoreboardManager;
+import net.academy.common.scoreboard.RankManager_old;
+import net.academy.common.scoreboard.ScoreboardManager_old;
 import net.academy.common.utils.Data;
 import net.academy.common.uuid.UUIDFetcher;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -25,10 +22,10 @@ public class AcademyAPI {
 
     private ConsoleManager consoleManager;
 
-    private ScoreboardManager scoreboardManager;
+    private ScoreboardManager_old scoreboardManager;
     private UUIDFetcher uuidFetcher;
 
-    private RankManager rankManager;
+    private RankManager_old rankManager;
 
     public AcademyAPI(String prefix, Plugin plugin) {
         Data.setPrefix(prefix);
@@ -50,8 +47,8 @@ public class AcademyAPI {
         return consoleManager;
     }
 
-    public ScoreboardManager getScoreboardManager() {
-        if(scoreboardManager == null) scoreboardManager = new ScoreboardManager();
+    public ScoreboardManager_old getScoreboardManager() {
+        if(scoreboardManager == null) scoreboardManager = new ScoreboardManager_old();
         return scoreboardManager;
     }
 
@@ -73,10 +70,10 @@ public class AcademyAPI {
      * @param pattern the Pattern for the rank manager.
      *                <b>only needed the first time</b>
      * @return the rank manager
-     * @see RankManager
+     * @see RankManager_old
      */
-    public RankManager getRankManager(String pattern) {
-        if(rankManager == null) rankManager = new RankManager(pattern);
+    public RankManager_old getRankManager(String pattern) {
+        if(rankManager == null) rankManager = new RankManager_old(pattern);
         return rankManager;
     }
 }

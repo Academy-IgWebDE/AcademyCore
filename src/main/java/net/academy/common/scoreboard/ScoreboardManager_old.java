@@ -14,14 +14,14 @@ import java.util.Arrays;
  * @version 1.0
  */
 @ComentState(commentState = State.STARTED)
-public class ScoreboardManager {
+public class ScoreboardManager_old {
 
     private final DataManager dataManager;
 
     /**
      * creates a new Instance of ScoreboardManager without a Pattern for the display names
      */
-    public ScoreboardManager() {
+    public ScoreboardManager_old() {
         dataManager = new DataManager("scoreBoards");
     }
 

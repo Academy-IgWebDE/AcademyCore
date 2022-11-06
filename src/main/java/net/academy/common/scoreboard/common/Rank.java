@@ -32,15 +32,13 @@ public class Rank {
     /**
      * the team for the scoreboard
      */
-    JScoreboardTeam team;
 
-    public Rank(String name, String displayName, String tabListPrefix, Integer weight, ChatColor color, JScoreboardTeam team) {
+    public Rank(String name, String displayName, String tabListPrefix, Integer weight, ChatColor color) {
         this.name = name;
         this.displayName = displayName;
         this.tabListPrefix = tabListPrefix;
         this.weight = weight;
         this.color = color;
-        this.team = team;
     }
 
 
@@ -76,11 +74,4 @@ public class Rank {
         this.color = color;
     }
 
-    public JScoreboardTeam getTeam() {
-        return team;
-    }
-
-    public void setTeam(JScoreboardTeam team) {
-        this.team = team;
-    }
 }

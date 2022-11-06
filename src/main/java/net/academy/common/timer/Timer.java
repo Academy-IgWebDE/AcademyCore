@@ -1,5 +1,7 @@
 package net.academy.common.timer;
 
+import net.academy.common.anotiation.comentState.ComentState;
+import net.academy.common.anotiation.comentState.State;
 import net.academy.common.player.PlayerManager;
 import net.academy.common.player.command.AcademyCommand;
 import net.academy.common.timer.interfaces.ReverseTimerEndEvent;
@@ -16,6 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
  * @author FlorianLetsPlays
  * @version 1.0
  */
+@ComentState(commentState = State.NONE)
 public class Timer {
     private StartTimerEvent startTimerEvent;
     private StopTimerEvent stopTimerEvent;
@@ -42,6 +45,7 @@ public class Timer {
         time = time + (minutes * 60);
         time = time + sec;
 
+        run();
     }
 
     public Timer setStartEvent(StartTimerEvent event) {
