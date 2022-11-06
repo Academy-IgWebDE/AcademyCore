@@ -6,7 +6,6 @@
 
     <groupId>de.igWeb.academy</groupId>
     <artifactId>common</artifactId>
-    <packaging>pom</packaging>
     <version>Beta-1.1</version>
 
     <properties>
@@ -14,12 +13,6 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
-    <distributionManagement>
-        <repository>
-            <id>space-aca</id>
-            <url>https://maven.pkg.jetbrains.space/igweb-academy/p/academycore/aca</url>
-        </repository>
-    </distributionManagement>
 
     <repositories>
         <repository>
