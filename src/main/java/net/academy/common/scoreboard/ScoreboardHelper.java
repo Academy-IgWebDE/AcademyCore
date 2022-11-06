@@ -32,8 +32,8 @@ public class ScoreboardHelper {
         Objective tabList = scoreboard.registerNewObjective("tabList" + player.getUniqueId(), "dummy", title);
         tabList.setDisplaySlot(DisplaySlot.PLAYER_LIST);
 
-        Objective belowName = scoreboard.registerNewObjective("belowName" + player.getUniqueId(), "dummy", title);
-        belowName.setDisplaySlot(DisplaySlot.BELOW_NAME);
+        //Objective belowName = scoreboard.registerNewObjective("belowName" + player.getUniqueId(), "dummy", title);
+        //belowName.setDisplaySlot(DisplaySlot.BELOW_NAME);
 
         int slot = lines.length - 1;
 
@@ -44,10 +44,32 @@ public class ScoreboardHelper {
             slot--;
         }
 
-        scoreboards.put(player, new HelpedScoreboard(scoreboard, sidebar, tabList, belowName));
+        scoreboards.put(player, new HelpedScoreboard(scoreboard, sidebar, tabList, null));
 
         player.setScoreboard(scoreboard);
 
+    }
+
+    public void activateScoreboardBelowName(Player player, String title, String line) {
+        if(scoreboards.containsKey(player)) {
+            HelpedScoreboard helpedScoreboard = scoreboards.get(player);
+            Objective belowName = helpedScoreboard.getScoreboard().registerNewObjective("belowName" + player.getUniqueId(), "dummy", title);
+            belowName.setDisplaySlot(DisplaySlot.BELOW_NAME);
+
+            Team team = getOrCreate("belowName", helpedScoreboard.getScoreboard());
+            String entry = getEntry(1);
+
+            if(line == null) {
+                helpedScoreboard.getScoreboard().resetScores(entry);
+                return;
+            }
+            team.setPrefix(line);
+            team.addEntry(entry);
+
+            belowName.getScore(entry).setScore(1);
+
+            helpedScoreboard.setBelowName(belowName);
+        }
     }
 
     public void setSidebarScore(Player player, int slot, String text) {
